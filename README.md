@@ -22,6 +22,19 @@ uvicorn app.main:app --reload
 |---|---|---|
 | `DRIVER_SHIFTS_DB` | `driver_shifts.db` | путь к базе SQLite |
 | `DRIVER_SHIFTS_SEED` | `trips.json` | файл с начальными поездками |
+| `DRIVER_SHIFTS_USER` | — | логин для входа (HTTP Basic) |
+| `DRIVER_SHIFTS_PASSWORD` | — | пароль; если не задан, вход без пароля |
+
+Если задан `DRIVER_SHIFTS_PASSWORD`, все страницы и API требуют логин и пароль, а `/docs` отключается.
+
+## Деплой на Railway
+
+1. На railway.com: New Project → Deploy from GitHub repo → выбрать этот репозиторий. Команда запуска берётся из `railway.json`, версия Python — из `.python-version`.
+2. В сервисе: правый клик → Attach Volume, точка монтирования `/data`. Без него база стирается при каждом деплое.
+3. Variables: `DRIVER_SHIFTS_DB=/data/driver_shifts.db`, `DRIVER_SHIFTS_USER`, `DRIVER_SHIFTS_PASSWORD`.
+4. Settings → Networking → Generate Domain.
+
+Каждый push в `main` деплоится заново.
 
 ## Тесты
 
